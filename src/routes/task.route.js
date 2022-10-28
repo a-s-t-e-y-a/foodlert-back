@@ -9,7 +9,7 @@ const auth = require('./../middlewares/auth');
 router.use(auth);
 
 router.post('/create', taskController.createTask);
-router.get('/', taskController.getAllTask);
+router.get('/:creatorId', taskController.getAllTask);
 router.get('/:id', taskController.getTask);
 router.patch('/edit/:id', taskController.updateTask);
 router.delete('/delete/:id', taskController.deleteTask);

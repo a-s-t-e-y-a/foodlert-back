@@ -11,9 +11,8 @@ const createTask = async (req, res, next) => {
   const err = validateSchema(req, taskValidation.createTask);
   if (err) return next(new ApiError(404, `${err.details[0].message}`));
 
-  const createdBy = req.user.id;
-
-  const { title, time, comment, checklists, dueDate, repeat, assignTo, status, completedBy, completedDate } = req.body;
+  const { title, time, comment, checklists, dueDate, repeat, assignTo, status, completedBy, completedDate, createdBy } =
+    req.body;
 
   const createdTask = await taskService.createTask({
     title,
@@ -32,7 +31,7 @@ const createTask = async (req, res, next) => {
 };
 
 const getAllTask = async (req, res, next) => {
-  const createdBy = req.user.id;
+  const createdBy = req.params.creatorId;
   const getAllTask = await taskService.getAllTask({ createdBy });
   res.status(httpStatus.CREATED).send({ totalTask: getAllTask.length, getAllTask });
 };
