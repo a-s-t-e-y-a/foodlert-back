@@ -1,0 +1,10 @@
+# Folders
+node_modules
+files
+plop_templates
+
+
+# Files
+*.log
+*.env
+*plopfile.js
