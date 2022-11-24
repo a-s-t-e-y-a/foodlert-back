@@ -1,6 +1,6 @@
-const { ObjectId } = require('mongoose').Types;
-require('express-async-errors');
-const inventorySupplierModel = require('./../models/inventorySupplier.model');
+const { ObjectId } = require("mongoose").Types;
+require("express-async-errors");
+const inventorySupplierModel = require("./../models/inventorySupplier.model");
 
 const createInventorySupplier = async ({
   name,
@@ -15,7 +15,8 @@ const createInventorySupplier = async ({
   deliveryFee,
   deliveryInstructions,
   cart,
-  order
+  order,
+  department,
 }) => {
   const createdInventorySupplier = await inventorySupplierModel.create({
     name,
@@ -30,7 +31,8 @@ const createInventorySupplier = async ({
     deliveryFee,
     deliveryInstructions,
     cart,
-    order
+    order,
+    department,
   });
 
   return createdInventorySupplier;
@@ -47,7 +49,8 @@ const getInventorySupplier = async ({ id }) => {
   return getAllInventorySupplier;
 };
 const updateInventorySupplier = async ({ id, body }) => {
-  const updatedInventorySupplier = await inventorySupplierModel.findByIdAndUpdate(id, body, { new: true });
+  const updatedInventorySupplier =
+    await inventorySupplierModel.findByIdAndUpdate(id, body, { new: true });
 
   return updatedInventorySupplier;
 };
@@ -61,5 +64,5 @@ module.exports = {
   getAllInventorySupplier,
   getInventorySupplier,
   updateInventorySupplier,
-  deleteInventorySupplier
+  deleteInventorySupplier,
 };

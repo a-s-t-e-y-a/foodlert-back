@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-
+const auth = require('../middlewares/auth');
 const payrollController = require('../controllers/payrollgroup.controller');
 
-router.post('/', payrollController.createPayroll);
-router.get('/', payrollController.getPayrolls);
-router.get('/:payrollGroupId', payrollController.getPayroll);
-router.patch('/:payrollGroupId', payrollController.updatePayroll);
-router.delete('/:payrollGroupId', payrollController.deletePayroll);
+router.post('/', auth, payrollController.createPayroll);
+router.get('/', auth, payrollController.getPayrolls);
+router.get('/:payrollGroupId',auth, payrollController.getPayroll);
+router.patch('/:payrollGroupId', auth, payrollController.updatePayroll);
+router.delete('/:payrollGroupId', auth, payrollController.deletePayroll);
 
 module.exports = router;

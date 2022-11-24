@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const toJSON = require('../utils/toJSON');
+const toJSON = require("../utils/toJSON");
 
 const { ObjectId } = mongoose.Types;
 
@@ -9,9 +9,11 @@ const subTask = mongoose.Schema({
   unit: String,
   value: Number,
   time: String,
-  status: { type: String, default: 'open' },
-  log: String,
-  comment: String
+  status: { type: String, default: "open" },
+  log: { type: String, default: "none" },
+  comment: { type: String, default: "none" },
+  completedDate: { type: String, default: "none" },
+  completedBy: [Object],
 });
 
 const taskSchema = mongoose.Schema(
@@ -21,18 +23,19 @@ const taskSchema = mongoose.Schema(
     comment: String,
     checklists: [subTask],
     dueDate: { type: String, required: true },
-    repeat: { type: String, default: 'day' },
+    repeat: { type: String, default: "day" },
     assignTo: { type: [String], required: true },
-    status: { type: String, default: 'open' },
-    completedBy: [String],
+    status: { type: String, default: "open" },
+    completedBy: [Object],
     completedDate: String,
-    createdBy: { type: ObjectId, ref: 'User' }
+    createdBy: { type: ObjectId, ref: "User" },
+    completed_checklists: { type: Number, default: 0 },
   },
   { timestamps: true }
 );
 
 toJSON(taskSchema);
 
-const task = mongoose.model('Task', taskSchema);
+const task = mongoose.model("Task", taskSchema);
 
 module.exports = task;

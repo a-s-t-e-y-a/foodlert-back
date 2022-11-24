@@ -1,84 +1,84 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const toJSON = require('../utils/toJSON');
+const toJSON = require("../utils/toJSON");
 
 const { ObjectId } = mongoose.Types;
 
 const manualSchema = mongoose.Schema({
   amount: {
-    type: Number
+    type: Number,
   },
-  meaursement: {
-    type: String
+  measurement: {
+    type: String,
   },
   ingredients: {
-    type: String
+    type: String,
   },
   image: {
-    type: String
+    type: String,
   },
   directions: {
-    type: String
-  }
+    type: String,
+  },
 });
 
 const rawMaterialSchema = mongoose.Schema({
   item: {
-    type: String
+    type: String,
   },
   unit: {
-    type: String
+    type: String,
   },
   quantity: {
-    type: Number
+    type: Number,
   },
   total: {
-    type: Number
-  }
+    type: Number,
+  },
 });
 
 const itemDetailsSchema = mongoose.Schema({
   nutriScore: { type: String },
   delivarable: { type: Boolean },
-  tag: [String]
+  tag: [String],
 });
 
 const menuItemSchema = mongoose.Schema(
   {
     item: {
       type: String,
-      required: true
+      required: true,
     },
     category: {
-      type: String
+      type: String,
     },
     season: {
-      type: String
+      type: String,
     },
     sellingPrice: {
-      type: Number
+      type: Number,
     },
     preparingTime: {
-      type: String
+      type: String,
     },
     totalSold: {
-      type: Number
+      type: Number,
     },
     manual: {
-      type: [manualSchema]
+      type: [manualSchema],
     },
     rawMaterial: {
-      type: [rawMaterialSchema]
+      type: [rawMaterialSchema],
     },
-    itemDetails: itemDetailsSchema
+    itemDetails: itemDetailsSchema,
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 
 toJSON(menuItemSchema);
 
-const MenuItem = mongoose.model('MenuItem', menuItemSchema);
+const MenuItem = mongoose.model("MenuItem", menuItemSchema);
 
 module.exports = MenuItem;

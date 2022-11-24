@@ -1,18 +1,31 @@
-const httpStatus = require('http-status');
-const validateSchema = require('./../validations/schema.validation');
-const ApiError = require('./../utils/ApiError');
-require('express-async-errors');
+const httpStatus = require("http-status");
+const validateSchema = require("./../validations/schema.validation");
+const ApiError = require("./../utils/ApiError");
+require("express-async-errors");
 
-const taskValidation = require('../validations/task.validation');
+const taskValidation = require("../validations/task.validation");
 
-const taskService = require('../services/task.service');
+const taskService = require("../services/task.service");
 
 const createTask = async (req, res, next) => {
+  console.log(req.body);
   const err = validateSchema(req, taskValidation.createTask);
   if (err) return next(new ApiError(404, `${err.details[0].message}`));
 
-  const { title, time, comment, checklists, dueDate, repeat, assignTo, status, completedBy, completedDate, createdBy } =
-    req.body;
+  const {
+    title,
+    time,
+    comment,
+    checklists,
+    dueDate,
+    repeat,
+    assignTo,
+    status,
+    completedBy,
+    completedDate,
+  } = req.body;
+
+  const createdBy = req.user.id;
 
   const createdTask = await taskService.createTask({
     title,
@@ -25,15 +38,18 @@ const createTask = async (req, res, next) => {
     status,
     completedBy,
     completedDate,
-    createdBy
+    createdBy,
   });
   res.status(httpStatus.CREATED).send({ createdTask });
 };
 
 const getAllTask = async (req, res, next) => {
-  const createdBy = req.params.creatorId;
+  console.log(req.user);
+  const createdBy = req.user.id;
   const getAllTask = await taskService.getAllTask({ createdBy });
-  res.status(httpStatus.CREATED).send({ totalTask: getAllTask.length, getAllTask });
+  res
+    .status(httpStatus.CREATED)
+    .send({ totalTask: getAllTask.length, getAllTask });
 };
 
 const getTask = async (req, res, next) => {
@@ -50,7 +66,7 @@ const updateTask = async (req, res, next) => {
 
   const updatedTask = await taskService.updateTask({
     id,
-    body: req.body
+    body: req.body,
   });
   res.status(httpStatus.CREATED).send({ updatedTask });
 };

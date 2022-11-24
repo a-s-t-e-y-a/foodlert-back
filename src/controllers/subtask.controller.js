@@ -1,11 +1,11 @@
-const httpStatus = require('http-status');
-const validateSchema = require('./../validations/schema.validation');
-const ApiError = require('./../utils/ApiError');
-require('express-async-errors');
+const httpStatus = require("http-status");
+const validateSchema = require("./../validations/schema.validation");
+const ApiError = require("./../utils/ApiError");
+require("express-async-errors");
 
-const subTaskValidation = require('../validations/subtask.validation');
+const subTaskValidation = require("../validations/subtask.validation");
 
-const subTaskService = require('../services/subtask.service');
+const subTaskService = require("../services/subtask.service");
 
 const createSubTask = async (req, res, next) => {
   const err = validateSchema(req, subTaskValidation.createSubTask);
@@ -19,7 +19,7 @@ const createSubTask = async (req, res, next) => {
     unit,
     value,
     time,
-    status
+    status,
   });
 
   res.status(httpStatus.CREATED).send({ createdSubTask });
@@ -28,7 +28,9 @@ const createSubTask = async (req, res, next) => {
 const getAllSubTask = async (req, res, next) => {
   const getAllSubTask = await subTaskService.getAllSubTask();
 
-  res.status(httpStatus.CREATED).send({ totalTask: getAllSubTask.length, getAllSubTask });
+  res
+    .status(httpStatus.CREATED)
+    .send({ totalTask: getAllSubTask.length, getAllSubTask });
 };
 
 const updateSubTask = async (req, res, next) => {
@@ -38,7 +40,12 @@ const updateSubTask = async (req, res, next) => {
   const id = req.params.id;
   const subtaskId = req.params.subtaskId;
 
-  const updatedSubTask = await subTaskService.updateSubTask({ id, subtaskId, body: req.body });
+  const updatedSubTask = await subTaskService.updateSubTask({
+    id,
+    subtaskId,
+    body: req.body,
+    user: req.user,
+  });
   res.status(httpStatus.CREATED).send({ updatedSubTask });
 };
 
@@ -46,7 +53,10 @@ const deleteSubTask = async (req, res, next) => {
   const id = req.params.id;
   const subtaskId = req.params.subtaskId;
 
-  const remainingSubTasks = await subTaskService.deleteSubTask({ id, subtaskId });
+  const remainingSubTasks = await subTaskService.deleteSubTask({
+    id,
+    subtaskId,
+  });
   res.status(httpStatus.CREATED).send({ remainingSubTasks });
 };
 

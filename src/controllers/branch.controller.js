@@ -7,8 +7,7 @@ const branchService = require('../services/branch.service');
 const Branch = require('../models/branch.model');
 
 const createBranch = async (req, res, next) => {
-  const { name, address } = req.body;
-  let manager = req.user.id;
+  const { name, manager, address } = req.body;
 
   const restaurentId = req.user.restaurent;
 

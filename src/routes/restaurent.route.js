@@ -8,9 +8,8 @@ const restaurentController = require('../controllers/restaurent.controller');
 const auth = require('../middlewares/auth');
 
 router.post('/', restaurentController.createRestaurent);
-router.get('/', auth, restaurentController.getAllRestaurent);
 router.get('/:restaurentId', auth, restaurentController.getRestaurent);
-// router.patch('/:restaurentId', auth, restaurentController.updateRestaurent);
+//router.patch('/:restaurentId', auth, restaurentController.updateRestaurent);
 router.delete('/:restaurentId', auth, restaurentController.deleteRestaurent);
 
 module.exports = router;

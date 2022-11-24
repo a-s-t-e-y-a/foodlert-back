@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const toJSON = require('../utils/toJSON');
+const toJSON = require("../utils/toJSON");
 
 const { ObjectId } = mongoose.Types;
 
@@ -8,49 +8,50 @@ const financeSchema = mongoose.Schema(
   {
     type: {
       type: String,
-      required: true
+      required: true,
     },
     costs: Object,
     time: {
-      type: String
+      type: String,
     },
     registerDate: {
       type: Date,
-      default: Date.now()
+      default: Date.now(),
     },
     registerBy: {
       type: ObjectId,
-      ref: 'User',
-      required: true
+      ref: "User",
+      required: true,
     },
     totalAmount: {
       type: Number,
-      required: true
+      required: true,
     },
     comment: {
-      type: String
+      type: String,
     },
     status: {
       type: String,
-      default: 'pending'
+      default: "pending",
     },
     method: {
-      type: String
+      type: String,
     },
     accountNo: {
-      type: String
+      type: String,
     },
     platforms: {
       type: Object,
-      default: undefined
+      default: undefined,
     },
-    missingPOS: Number
+    notes: String,
+    missingPOS: Number,
   },
   { timestamps: true }
 );
 
 toJSON(financeSchema);
 
-const Finance = mongoose.model('Finance', financeSchema);
+const Finance = mongoose.model("Finance", financeSchema);
 
 module.exports = Finance;

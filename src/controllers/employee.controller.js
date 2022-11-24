@@ -1,11 +1,12 @@
-const httpStatus = require('http-status');
-require('express-async-errors');
+const httpStatus = require("http-status");
+require("express-async-errors");
+const validateSchema = require("../middlewares/validate.js");
 
-const employeeValidation = require('../validations/employee.validation');
+const employeeValidation = require("../validations/employee.validation");
 
-const employeeService = require('../services/employee.service');
-const userService = require('../services/user.service');
-const User = require('../models/user.model');
+const employeeService = require("../services/employee.service");
+const userService = require("../services/user.service");
+const User = require("../models/user.model");
 
 const createEmployee = async (req, res, next) => {
   const {
@@ -24,7 +25,7 @@ const createEmployee = async (req, res, next) => {
     payrollGroup,
     workSlot,
     emergencyContact,
-    experience
+    experience,
   } = req.body;
 
   const restaurentId = req.user.restaurent;
@@ -37,10 +38,10 @@ const createEmployee = async (req, res, next) => {
     dob,
     phoneNumber,
     email,
-    type: 'employee',
+    type: "employee",
     branch,
     avatar,
-    restaurent: restaurentId
+    restaurent: restaurentId,
   };
 
   const employeeData = {
@@ -57,10 +58,14 @@ const createEmployee = async (req, res, next) => {
     experience,
     resume,
     branch,
-    restaurent: restaurentId
+    restaurent: restaurentId,
   };
 
-  const employee = await employeeService.createEmployee(userData, employeeData, restaurentId);
+  const employee = await employeeService.createEmployee(
+    userData,
+    employeeData,
+    restaurentId
+  );
   res.status(httpStatus.CREATED).json({ employee });
 };
 
@@ -81,10 +86,10 @@ const getEmployees = async (req, res, next) => {
   const branchId = req.user.branch.id;
   console.log(query);
   let employees;
-  if (req.user.type === 'owner') {
+  if (req.user.type === "owner") {
     query.restaurent = restaurentId;
     employees = await employeeService.getEmployees(query);
-  } else if (req.user.type === 'manager') {
+  } else if (req.user.type === "manager") {
     query.branch = branchId;
     employees = await employeeService.getEmployees(query);
   }
@@ -117,22 +122,25 @@ const updateEmployee = async (req, res, next) => {
     emergencyContact,
     experience,
     role,
-    access
+    access,
   } = req.body;
 
-  let avatar, resume, companyLogo, sickCertificate;
+  let avatar, resume, companyLogo, sickCertificates;
 
   req.files?.forEach((file) => {
-    if (file.fieldname === 'avatar') {
+    console.log("file", file);
+    if (file.fieldname === "avatar") {
       avatar = file.filename;
-    } else if (file.fieldname === 'resume') {
+    } else if (file.fieldname === "resume") {
       resume = file.filename;
-    } else if (file.fieldname === 'companyLogo') {
+    } else if (file.fieldname === "companyLogo") {
       companyLogo = file.filename;
-    } else if (file.fieldname === 'sickCertificate') {
-      sickCertificate = file.filename;
+    } else if (file.fieldname === "sickCertificate") {
+      sickCertificates = file.filename;
     }
   });
+
+  console.log(companyLogo);
 
   if (experience) {
     experience.logo = companyLogo;
@@ -144,7 +152,7 @@ const updateEmployee = async (req, res, next) => {
     phoneNumber,
     email,
     branch,
-    avatar
+    avatar,
   };
 
   const employeeData = {
@@ -162,13 +170,18 @@ const updateEmployee = async (req, res, next) => {
     mac,
     emergencyContact,
     experience,
-    sickCertificate,
+    sickCertificates,
     resume,
     role,
-    access
+    access,
   };
 
-  const employee = await employeeService.updateEmployee(employeeId, userData, employeeData, restaurentId);
+  const employee = await employeeService.updateEmployee(
+    employeeId,
+    userData,
+    employeeData,
+    restaurentId
+  );
   res.json({ employee });
 };
 
@@ -185,5 +198,5 @@ module.exports = {
   getEmployee,
   getEmployees,
   updateEmployee,
-  deleteEmployee
+  deleteEmployee,
 };

@@ -1,6 +1,7 @@
 const httpStatus = require('http-status');
 require('express-async-errors');
 
+
 const restranValidation = require('../validations/restaurent.validation');
 
 const restaurentService = require('../services/restaurent.service');
@@ -31,13 +32,9 @@ const createRestaurent = async (req, res, next) => {
 };
 
 const getRestaurent = async (req, res, next) => {
+
   const { restaurentId } = req.params;
   const restaurent = await restaurentService.getRestaurent(restaurentId);
-  res.json({ restaurent });
-};
-
-const getAllRestaurent = async (req, res, next) => {
-  const restaurent = await restaurentService.getAllRestaurent();
   res.json({ restaurent });
 };
 
@@ -82,6 +79,5 @@ const deleteRestaurent = async (req, res, next) => {
 module.exports = {
   createRestaurent,
   getRestaurent,
-  deleteRestaurent,
-  getAllRestaurent
+  deleteRestaurent
 };

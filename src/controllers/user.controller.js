@@ -1,13 +1,13 @@
-const httpStatus = require('http-status');
-require('express-async-errors');
+const httpStatus = require("http-status");
+require("express-async-errors");
 
-const bcrypt = require('bcryptjs');
+const bcrypt = require("bcryptjs");
 
-const userValidation = require('../validations/user.validation');
+const userValidation = require("../validations/user.validation");
 
-const User = require('../models/user.model');
-const ApiError = require('../utils/ApiError');
-const { deleteFile } = require('../utils/deleteFile');
+const User = require("../models/user.model");
+const ApiError = require("../utils/ApiError");
+const { deleteFile } = require("../utils/deleteFile");
 
 const updateUser = async (req, res, next) => {
   const { userId } = req.params;
@@ -18,16 +18,17 @@ const updateUser = async (req, res, next) => {
   console.log(req.files);
 
   req.files?.forEach((file) => {
-    if (file.fieldname === 'avatar') {
+    if (file.fieldname === "avatar") {
       avatar = file.filename;
       return;
     }
   });
-
   console.log(req.user);
-
   if (userId !== req.user.id) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'You are not allowed to change!');
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      "You are not allowed to change!"
+    );
   }
 
   const { email, dob, fullName, phoneNumber, password, newPassword } = req.body;
@@ -36,7 +37,7 @@ const updateUser = async (req, res, next) => {
 
   if (password) {
     if (!(await bcrypt.compare(password, user.password))) {
-      throw new ApiError(httpStatus.BAD_REQUEST, 'Incorrect password');
+      throw new ApiError(httpStatus.BAD_REQUEST, "Incorrect password");
     }
     const hashedPassword = await bcrypt.hash(newPassword, 10);
     user.password = hashedPassword;
@@ -48,7 +49,11 @@ const updateUser = async (req, res, next) => {
     deleteFile(user.avatar);
   }
 
-  user = await User.findByIdAndUpdate(userId, { email, dob, phoneNumber, fullName, avatar }, { new: true });
+  user = await User.findByIdAndUpdate(
+    userId,
+    { email, dob, phoneNumber, fullName, avatar },
+    { new: true }
+  );
   res.send({ user });
 };
 
@@ -65,4 +70,12 @@ const getUsers = async (req, res, next) => {
   res.send({ users });
 };
 
-module.exports = { updateUser, getUser, getUsers };
+const deleteUser = async (req, res, next) => {
+  const { email } = req.body;
+  const user = await User.findOne({ email });
+  console.log(user);
+  await User.findByIdAndDelete(user.id);
+  res.send({});
+};
+
+module.exports = { updateUser, getUser, getUsers, deleteUser };

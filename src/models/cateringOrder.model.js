@@ -1,90 +1,93 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const toJSON = require('../utils/toJSON');
+const toJSON = require("../utils/toJSON");
 
 const { ObjectId } = mongoose.Types;
 
 const cateringClientSchema = mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   phoneNo: {
-    type: Number
+    type: Number,
   },
   address: {
-    type: String
+    type: String,
   },
   type: {
-    type: String
+    type: String,
   },
   date: {
-    type: String
+    type: String,
   },
   time: {
-    type: String
+    type: String,
   },
   image: {
-    type: String
-  }
+    type: String,
+  },
 });
 
 const orderDetailSchema = mongoose.Schema({
   item: {
-    type: String
+    type: String,
   },
   price: {
-    type: Number
+    type: Number,
   },
   quantity: {
-    type: Number
-  }
+    type: Number,
+  },
+  total: {
+    type: Number,
+  },
 });
 
 const cateringOrderSchema = mongoose.Schema(
   {
     orderedBy: {
-      type: cateringClientSchema
+      type: cateringClientSchema,
     },
     bookedBy: {
-      type: String
+      type: String,
     },
     approvedBy: {
-      type: String
+      type: String,
     },
     paymentBy: {
-      type: String
+      type: String,
     },
     notes: {
-      type: String
+      type: String,
     },
     orderDate: {
-      type: String
+      type: String,
     },
     deliveryDate: {
-      type: String
+      type: String,
     },
     status: {
       type: String,
-      default: 'open'
+      default: "open",
     },
     totalAmount: {
-      type: Number
+      type: Number,
     },
     upfrontPaid: {
-      type: Number
+      type: Number,
     },
     orderDetails: {
-      type: [orderDetailSchema]
-    }
+      type: [orderDetailSchema],
+    },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 
 toJSON(cateringOrderSchema);
 
-const CateringOrder = mongoose.model('CateringOrder', cateringOrderSchema);
+const CateringOrder = mongoose.model("CateringOrder", cateringOrderSchema);
 
 module.exports = CateringOrder;

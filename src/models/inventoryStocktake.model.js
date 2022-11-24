@@ -1,95 +1,113 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const toJSON = require('../utils/toJSON');
+const toJSON = require("../utils/toJSON");
 
 const { ObjectId } = mongoose.Types;
 
 const historySchema = mongoose.Schema({
   date: {
-    type: String
+    type: String,
   },
   by: {
-    type: String
+    type: ObjectId,
+    ref: "InventorySupplier",
   },
   action: {
-    type: String
+    type: String,
   },
   quantity: {
-    type: Number
+    type: {
+      unit: String,
+      value: Number,
+    },
   },
   total: {
-    type: Number
-  }
+    type: Number,
+  },
 });
 
 const inventoryStocktakeSchema = mongoose.Schema(
   {
     itemName: {
       type: String,
-      required: true
+      required: true,
+      unique: true,
     },
     price: {
-      type: Number
+      type: Number,
     },
     minStock: {
-      type: Number
+      type: Number,
     },
     quantity: {
-      type: Object
+      value: Number,
+      unit: String,
     },
-    supQuantity: {
-      type: Object
+    subQuantity: {
+      value: Number,
+      unit: String,
     },
-    supsupQuantity: {
-      type: Object
+    subSubQuantity: {
+      value: Number,
+      unit: String,
     },
     total: {
-      type: Number
+      type: Number,
     },
-    supplier: {
-      type: String
-    },
+    supplier: [
+      {
+        type: ObjectId,
+        ref: "InventorySupplier",
+      },
+    ],
     storage: {
-      type: String
+      type: String,
     },
     purchased: {
-      type: Number
+      type: Number,
     },
     begin: {
-      type: Number
+      type: Number,
+      default: 0,
     },
     sold: {
-      type: Number
+      type: Number,
+      default: 0,
     },
     waste: {
-      type: Number
+      type: Number,
+      default: 0,
     },
     stock: {
-      type: Number
+      type: Number,
+      default: 0,
     },
     inStock: {
-      type: Number
+      type: Number,
     },
     orderDate: {
-      type: String
+      type: String,
     },
     lastOrderDate: {
-      type: String
+      type: String,
     },
     lastOrderRecieved: {
-      type: String
+      type: String,
     },
     history: {
-      type: [historySchema]
-    }
+      type: [historySchema],
+    },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 
 toJSON(inventoryStocktakeSchema);
 
-const InventoryStocktake = mongoose.model('InventoryStocktake', inventoryStocktakeSchema);
+const InventoryStocktake = mongoose.model(
+  "InventoryStocktake",
+  inventoryStocktakeSchema
+);
 
 module.exports = InventoryStocktake;

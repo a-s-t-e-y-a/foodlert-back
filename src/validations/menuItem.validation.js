@@ -1,23 +1,23 @@
-const Joi = require('joi');
-const { objectId } = require('./custom.validation');
+const Joi = require("joi");
+const { objectId } = require("./custom.validation");
 
 const manual = {
   amount: Joi.number().required(),
-  meaursement: Joi.string().required(),
+  measurement: Joi.string().required(),
   ingredients: Joi.string(),
   image: Joi.string(),
-  directions: Joi.string()
+  directions: Joi.string(),
 };
 const rawMaterial = {
   item: Joi.string().required(),
   unit: Joi.string().required(),
   quantity: Joi.number(),
-  total: Joi.number()
+  total: Joi.number(),
 };
 const itemDetails = {
-  nutriScore: Joi.string().valid('A', 'B', 'C', 'D', 'E').required(),
+  nutriScore: Joi.string().valid("A", "B", "C", "D", "E").required(),
   delivarable: Joi.boolean(),
-  tag: Joi.array()
+  tag: Joi.array(),
 };
 
 const createMenuItem = {
@@ -29,8 +29,8 @@ const createMenuItem = {
     preparingTime: Joi.string(),
     manual: Joi.array().items(Joi.object().keys(manual)),
     rawMaterial: Joi.array().items(Joi.object().keys(rawMaterial)),
-    itemDetails: Joi.object().keys(itemDetails)
-  })
+    itemDetails: Joi.object().keys(itemDetails),
+  }),
 };
 
 const updateMenuItem = {
@@ -42,8 +42,8 @@ const updateMenuItem = {
     preparingTime: Joi.string(),
     manual: Joi.array().items(Joi.object().keys(manual)),
     rawMaterial: Joi.array().items(Joi.object().keys(rawMaterial)),
-    itemDetails: Joi.object().keys(itemDetails)
-  })
+    itemDetails: Joi.object().keys(itemDetails),
+  }),
 };
 
 module.exports = { createMenuItem, updateMenuItem };

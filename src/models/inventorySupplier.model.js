@@ -1,79 +1,98 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const toJSON = require('../utils/toJSON');
+const toJSON = require("../utils/toJSON");
 
 const { ObjectId } = mongoose.Types;
 
 const InventoryCart = mongoose.Schema({
   item: {
     type: String,
-    required: true
+    required: true,
   },
   quantity: {
-    type: Object
+    value: Number,
+    unit: String,
   },
-  supQuantity: {
-    type: Object
+  subQuantity: {
+    value: Number,
+    unit: String,
   },
-  supsupQuantity: {
-    type: Object
+  subSubQuantity: {
+    value: Number,
+    unit: String,
   },
   price: {
-    type: Number
+    type: Number,
   },
   total: {
-    type: Number
-  }
+    type: Number,
+  },
+  upfrontPaid: {
+    type: Number,
+  },
+  paymentBy: {
+    type: String,
+  },
 });
 
 const inventorySupplierSchema = mongoose.Schema(
   {
     name: {
       type: String,
-      required: true
+      required: true,
     },
     email: {
-      type: String
+      type: String,
     },
     portalUrl: {
-      type: String
+      type: String,
     },
     mobileNo: {
-      type: Number
+      type: Number,
     },
     phoneNo: {
-      type: Number
+      type: Number,
     },
     address: {
-      type: String
+      type: String,
     },
     image: {
-      type: String
+      type: String,
     },
     orderVia: {
-      type: String
+      type: String,
     },
     minOrderValue: {
-      type: Number
+      type: Number,
     },
     deliveryFee: {
-      type: Number
+      type: Number,
     },
     deliveryInstructions: {
-      type: String
+      type: String,
     },
     cart: {
-      type: [InventoryCart]
+      type: [InventoryCart],
     },
-    order: ObjectId
+    order: {
+      type: ObjectId,
+      ref: "InventoryOrder",
+    },
+    department: {
+      type: ObjectId,
+      ref: "Department",
+    },
   },
   {
-    timestamps: true
+    timestamps: true,
   }
 );
 
 toJSON(inventorySupplierSchema);
 
-const InventorySupplier = mongoose.model('InventorySupplier', inventorySupplierSchema);
+const InventorySupplier = mongoose.model(
+  "InventorySupplier",
+  inventorySupplierSchema
+);
 
 module.exports = InventorySupplier;

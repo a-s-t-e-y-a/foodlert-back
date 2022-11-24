@@ -14,11 +14,6 @@ const getRestaurent = async (restaurentId) => {
   return restaurent;
 };
 
-const getAllRestaurent = async (restaurentId) => {
-  const restaurent = await Restaurent.find().populate('owner');
-  return restaurent;
-};
-
 // const updateRestaurent = async (restaurentId, updateBody) => {
 //   console.log(restaurentId);
 //   const restaurent = await Restaurent.findByIdAndUpdate(restaurentId, { ...updateBody }, { new: true });
@@ -39,6 +34,5 @@ const deleteRestaurent = async (restaurentId) => {
 module.exports = {
   createRestaurent,
   getRestaurent,
-  deleteRestaurent,
-  getAllRestaurent
+  deleteRestaurent
 };

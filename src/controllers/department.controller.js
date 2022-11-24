@@ -11,7 +11,6 @@ const createDepartment = async (req, res, next) => {
 };
 
 const getDepartmentes = async (req, res, next) => {
-  console.log('tttttttttt', req.user);
   const branchId = req.user.branch.id;
   const departments = await departService.getDepartmentes(branchId);
   res.json({ departments });
