@@ -43,7 +43,7 @@ const createInventoryStocktake = async ({
     minStock,
     quantity,
     subQuantity,
-    subSubQuantity,
+    subsubQuantity,
     total,
     supplier,
     storage,

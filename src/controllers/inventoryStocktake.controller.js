@@ -20,7 +20,7 @@ const createInventoryStocktake = async (req, res, next) => {
     minStock,
     quantity,
     subQuantity,
-    subSubQuantity,
+    subsubQuantity,
     total,
     supplier,
     storage,
@@ -43,7 +43,7 @@ const createInventoryStocktake = async (req, res, next) => {
       minStock,
       quantity,
       subQuantity,
-      subSubQuantity,
+      subsubQuantity,
       total,
       supplier,
       storage,
@@ -63,8 +63,7 @@ const createInventoryStocktake = async (req, res, next) => {
 };
 
 const getAllInventoryStocktake = async (req, res, next) => {
-  const getAllInventoryStocktake =
-    await inventoryStocktakeService.getAllInventoryStocktake();
+  const getAllInventoryStocktake = await inventoryStocktakeService.getAllInventoryStocktake();
   res.status(httpStatus.CREATED).send({
     totalInventoryStocktake: getAllInventoryStocktake.length,
     getAllInventoryStocktake,
