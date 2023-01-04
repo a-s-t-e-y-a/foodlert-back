@@ -4,7 +4,7 @@ const config = require('../utils/config');
 const logger = require('../utils/logger');
 
 const transport = nodemailer.createTransport(config.email.smtp);
-
+console.log(config.env)
 if (config.env !== 'test') {
   transport
     .verify()
