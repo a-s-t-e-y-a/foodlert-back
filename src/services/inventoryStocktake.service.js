@@ -67,7 +67,6 @@ const getAllInventoryStocktake = async () => {
   const getAllInventoryStocktake = await inventoryStocktakeModel
     .find()
     .populate("supplier")
-    .populate("createdBy")
     .populate({ path: "history" });
 
   return getAllInventoryStocktake;

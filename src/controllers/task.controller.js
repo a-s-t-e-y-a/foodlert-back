@@ -9,8 +9,8 @@ const taskService = require("../services/task.service");
 
 const createTask = async (req, res, next) => {
   console.log(req.body);
-  const err = validateSchema(req, taskValidation.createTask);
-  if (err) return next(new ApiError(404, `${err.details[0].message}`));
+  // const err = validateSchema(req, taskValidation.createTask);
+  // if (err) return next(new ApiError(404, `${err.details[0].message}`));
 
   const {
     title,
