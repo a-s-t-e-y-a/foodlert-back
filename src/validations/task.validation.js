@@ -4,7 +4,7 @@ const createTask = {
   body: Joi.object({
     title: Joi.string().trim().min(1).required(),
     time: Joi.string(),
-    comment: Joi.string().trim(),
+    // comment: Joi.string().trim(),
     checklists: Joi.array(),
     dueDate: Joi.string().trim().required(),
     repeat: Joi.string().valid("day", "week", "month"),
@@ -20,7 +20,7 @@ const updateTask = {
   body: Joi.object({
     title: Joi.string().trim(),
     time: Joi.string(),
-    comment: Joi.string().trim(),
+    // comment: Joi.string().trim(),
     checklists: Joi.array(),
     dueDate: Joi.string().trim(),
     repeat: Joi.string().valid("day", "week", "month"),

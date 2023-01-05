@@ -11,7 +11,7 @@ const subTask = mongoose.Schema({
   time: String,
   status: { type: String, default: "open" },
   log: { type: String, default: "none" },
-  comment: { type: String, default: "none" },
+  comment: { type: String },
   completedDate: { type: String, default: "none" },
   completedBy: [Object],
 });
