@@ -22,7 +22,7 @@ const taskSchema = mongoose.Schema(
     time: String,
     comment: String,
     checklists: [subTask],
-    dueDate: { type: String, required: true },
+    dueDate: { type: String},
     repeat: { type: String, default: "day" },
     assignTo: { type: [String], required: true },
     status: { type: String, default: "open" },

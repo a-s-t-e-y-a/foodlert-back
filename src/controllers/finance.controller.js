@@ -39,8 +39,8 @@ const createFinance = async (req, res, next) => {
 
   const validator = getValidator(type);
   console.log(type, req.originalUrl);
-  const err = validateSchema(req, validator);
-  if (err) return next(new ApiError(404, `${err.details[0].message}`));
+  // const err = validateSchema(req, validator);
+  // if (err) return next(new ApiError(404, `${err.details[0].message}`));
 
   const {
     costs,
