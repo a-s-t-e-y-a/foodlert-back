@@ -62,7 +62,7 @@ const createFinance = async ({
 
 const getAllFinance = async ({ type }) => {
   const getAllFinance = await financeModel
-    .find({ type:"lunch" })
+    .find({ time:"lunch" })
     .populate("registerBy");
 
   return getAllFinance;
