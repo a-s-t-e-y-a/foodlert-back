@@ -80,6 +80,7 @@ const cateringOrderSchema = mongoose.Schema(
     orderDetails: {
       type: [orderDetailSchema],
     },
+    markAsDelivered : false
   },
   {
     timestamps: true,
