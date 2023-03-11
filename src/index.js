@@ -9,7 +9,7 @@ let server;
 mongoose.connect(config.mongourl).then(() => {
   logger.info('Connected to MONGODB');
   app.listen(config.port, () => {
-    console.info(`Listening to http://127.0.0.1:${config.port}`);
+    console.log(`Listening to http://127.0.0.1:${config.port}`);
   });
 });
 
