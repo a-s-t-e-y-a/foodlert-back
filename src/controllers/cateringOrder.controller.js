@@ -38,7 +38,8 @@ const createCateringOrder = async (req, res, next) => {
     totalAmount,
     randomAmount,
     upfrontPaid,
-    orderDetails
+    orderDetails,
+    markAsDelivery : false
   });
   res.status(httpStatus.CREATED).send({ createdCateringOrder });
 };
