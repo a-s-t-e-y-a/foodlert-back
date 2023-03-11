@@ -28,7 +28,8 @@ const createCateringOrder = async ({
     totalAmount,
     randomAmount,
     upfrontPaid,
-    orderDetails
+    orderDetails,
+    markAsDelivery : false
   });
 
   return createdCateringOrder;
