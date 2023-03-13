@@ -79,6 +79,8 @@ const getAllFinance = async (req, res, next) => {
   console.log("type", type);
   const getAllFinance = await financeService.getAllFinance({ type });
   res
+
+  
     .status(httpStatus.CREATED)
     .send({ totalFinance: getAllFinance.length, getAllFinance });
 };
