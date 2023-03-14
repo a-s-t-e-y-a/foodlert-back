@@ -46,7 +46,8 @@ const createCateringOrder = async (req, res, next) => {
 
 const getAllCateringOrder = async (req, res, next) => {
   const getAllCateringOrder = await cateringOrderService.getAllCateringOrder();
-  res.status(httpStatus.CREATED).send({ totalCateringOrder: getAllCateringOrder.length, getAllCateringOrder });
+  console.log(getAllCateringOrder)
+  res.send(getAllCateringOrder);
 };
 
 const getCateringOrder = async (req, res, next) => {
@@ -57,7 +58,7 @@ const getCateringOrder = async (req, res, next) => {
 
 const updateCateringOrder = async (req, res, next) => {
   const id = req.params.id;
-
+console.log(req.body)
   const updatedCateringOrder = await cateringOrderService.updateCateringOrder({ id, body: req.body });
   res.status(httpStatus.CREATED).send({ updatedCateringOrder });
 };

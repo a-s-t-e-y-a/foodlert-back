@@ -37,7 +37,7 @@ const createCateringOrder = async ({
 
 const getAllCateringOrder = async () => {
   const getAllCateringOrder = await cateringOrderModel.find();
-
+  // console.log(getAllCateringOrder)
   return getAllCateringOrder;
 };
 const getCateringOrder = async ({ id }) => {
@@ -47,7 +47,6 @@ const getCateringOrder = async ({ id }) => {
 };
 const updateCateringOrder = async ({ id, body }) => {
   const updatedCateringOrder = await cateringOrderModel.findByIdAndUpdate(id, body, { new: true });
-
   return updatedCateringOrder;
 };
 
