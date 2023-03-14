@@ -1,4 +1,4 @@
-const { ObjectId } = require("mongoose").Types;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       const { ObjectId } = require("mongoose").Types;
 require("express-async-errors");
 const financeModel = require("./../models/finance.model");
 const getTotalAmount = (costs) => {
@@ -62,7 +62,7 @@ const createFinance = async ({
 
 const getAllFinance = async ({ type }) => {
   const getAllFinance = await financeModel
-    .find({ type })
+    .find({ time:"lunch" })
     .populate("registerBy");
 
   return getAllFinance;

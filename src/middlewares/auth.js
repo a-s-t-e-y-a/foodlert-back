@@ -19,7 +19,7 @@ const auth = async (req, res, next) => {
   }
 
   token = token.startsWith("Bearer") && token.split(" ")[1];
-
+// console.log(token)
   if (!token || token === "") {
     return res
       .status(httpStatus.UNAUTHORIZED)
