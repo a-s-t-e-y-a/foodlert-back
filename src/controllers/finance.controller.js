@@ -81,7 +81,7 @@ const getAllFinance = async (req, res, next) => {
   
   const getAllFinance = await financeService.getAllFinance({ type , query });
   res.status(httpStatus.CREATED)
-    .send({ totalFinance: getAllFinance.length, getAllFinance });
+    .send({ totalFinance: getAllFinance.length, getAllFinance,query });
 };
 
 const changeFinanceStatus = async (req, res, next) => {
