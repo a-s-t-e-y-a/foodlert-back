@@ -60,12 +60,26 @@ const createFinance = async ({
   return createdFinance;
 };
 
-const getAllFinance = async ({ type }) => {
-  const getAllFinance = await financeModel
-    .find({ type })
+const getAllFinance = async ({ type,query }) => {
+ console.log(query)
+  const tim = ["lunch","dinner"]
+  const timeArr = query.time
+ console.log(timeArr)
+  
+  if(timeArr.length==0){
+    const getAllFinance = await financeModel
+    .find()
     .populate("registerBy");
-
+    return getAllFinance;
+  }
+  else{
+    const getAllFinance = await financeModel
+  .find({time:{$in:timeArr}})
+  .populate("registerBy");
   return getAllFinance;
+  }
+  // { field: { $in: [<value1>, <value2>, ... <valueN> ] } }
+  
 };
 const changeFinanceStatus = async ({ id, body }) => {
   const getAllFinance = await financeModel.findByIdAndUpdate(id, body, {
