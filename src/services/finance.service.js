@@ -66,13 +66,15 @@ const getAllFinance = async ({ type,query }) => {
   const timeArr = query.time
  console.log(timeArr)
   
-  if(timeArr.length==0){
+  if(timeArr==undefined || timeArr==""){
+   console.log("length is 0")
     const getAllFinance = await financeModel
     .find()
     .populate("registerBy");
     return getAllFinance;
   }
   else{
+    console.log("length is 1")
     const getAllFinance = await financeModel
   .find({time:{$in:timeArr}})
   .populate("registerBy");
