@@ -77,26 +77,43 @@ const createFinance = async (req, res, next) => {
 const getAllFinance = async (req, res, next) => {
   const type = getType(req);
   const query = req.query;
-  console.log(query.time)
-  console.log("typeee-->",type)
 
- if(query.time!=undefined){
-  let timeQueries = req.query.time.split(",")
-  console.log("tieeee-->",timeQueries)
+  const typeOfUrl = type.split("?")
+  const url = typeOfUrl[0]
+  console.log(url)
+  
 
-  const getAllFinance = await financeService.getAllFinance({ type , query,timeQueries});
+   if(url==='cash-register'){
+    if(query.time!=undefined && query.time!=""){
+      let timeQueries = req.query.time.split(",")
+      console.log("tieeee-->",timeQueries)
+    
+      const getAllFinance = await financeService.getAllFinance({ url , query,timeQueries});
+      res.status(httpStatus.CREATED)
+        .send({ totalFinance: getAllFinance.length, getAllFinance,query });
+    }
+      else{
+        const getAllFinance = await financeService.getAllFinance({ url , query});
+      res.status(httpStatus.CREATED)
+        .send({ totalFinance: getAllFinance.length, getAllFinance,query });
+      }
+   }
+   else if(url==='safe-deposit'){
+    const date = req.query.date;
+    console.log(date)
+   if(date===undefined || date===""){
+    const getAllFinance = await financeService.getAllFinance({ url , query});
+    res.status(httpStatus.CREATED)
+      .send({ totalFinance: getAllFinance.length, getAllFinance,query });
+ }
+ else{
+  console.log("date hai")
+  const getAllFinance = await financeService.getAllFinance({ url , query,date});
   res.status(httpStatus.CREATED)
     .send({ totalFinance: getAllFinance.length, getAllFinance,query });
-  }
-  else{
-    const getAllFinance = await financeService.getAllFinance({ type , query});
-  res.status(httpStatus.CREATED)
-    .send({ totalFinance: getAllFinance.length, getAllFinance,query });
-  }
- 
-  // res.send(query)
-  
-  
+ }
+   }
+
 };
 
 const changeFinanceStatus = async (req, res, next) => {
