@@ -75,11 +75,14 @@ const createFinance = async (req, res, next) => {
 };
 
 const getAllFinance = async (req, res, next) => {
-  const query = req.query
+  const query = req.query;
+  let timeQueries = req.query.time.split(",")
+  console.log("tieeee-->",timeQueries)
   const type = getType(req);
+ 
   // res.send(query)
   
-  const getAllFinance = await financeService.getAllFinance({ type , query });
+  const getAllFinance = await financeService.getAllFinance({ type , query ,timeQueries});
   res.status(httpStatus.CREATED)
     .send({ totalFinance: getAllFinance.length, getAllFinance,query });
 };
