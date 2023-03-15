@@ -61,8 +61,8 @@ const createFinance = async ({
 };
 
 const getAllFinance = async ({ type,query,timeQueries }) => {
- console.log(query)
-  // const data = ["lunch","dinner"]
+ 
+
   const {time} = query;
   console.log(timeQueries)
  
