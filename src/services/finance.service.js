@@ -1,6 +1,6 @@
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       const { ObjectId } = require("mongoose").Types;
-require("express-async-errors");
-const financeModel = require("./../models/finance.model");
+const { ObjectId } = require('mongoose').Types;
+require('express-async-errors');
+const financeModel = require('./../models/finance.model');
 const getTotalAmount = (costs) => {
   let cents = 0,
     dollars = 0;
@@ -8,7 +8,7 @@ const getTotalAmount = (costs) => {
     const cost = parseFloat(costs[key]);
     const quantity = parseFloat(key.slice(0, key.length - 1));
 
-    if (key.includes("c")) cents += quantity * cost;
+    if (key.includes('c')) cents += quantity * cost;
     else dollars += quantity * cost;
   }
 
@@ -34,12 +34,11 @@ const createFinance = async ({
   method,
   accountNo,
   platforms,
-  notes,
+  notes
 }) => {
   const totalAmount = getTotalAmount(costs);
   let missingPOS;
-  if (type === "closing-days")
-    missingPOS = getMissingPos(totalAmount, platforms);
+  if (type === 'closing-days') missingPOS = getMissingPos(totalAmount, platforms);
   console.log(notes);
 
   const createdFinance = await financeModel.create({
@@ -54,39 +53,40 @@ const createFinance = async ({
     accountNo,
     platforms,
     notes,
-    missingPOS,
+    missingPOS
   });
 
   return createdFinance;
 };
 
-const getAllFinance = async ({ type,query,timeQueries }) => {
- 
+const getAllFinance = async ({ url, query, timeQueries="",date=""}) => {
 
-  const {time} = query;
-  console.log(timeQueries)
- 
-  
-  if(time==="" || time===undefined){
-    console.log("length is 0")
-    const getAllFinance = await financeModel
-    .find({type})
-    .populate("registerBy");
-    return getAllFinance;
-  }
-  else{
-    console.log("length is 1")
-    const getAllFinance = await financeModel
-  .find({time:{$in:timeQueries}})
-  .populate("registerBy");
-  return getAllFinance;
-  }
- 
+   if(url=='cash-register'){
+    const { time } = query;
+    console.log(timeQueries);
+
+    if (time === "" || time === undefined) {
+      console.log('length is 0');
+      const getAllFinance = await financeModel.find({type: url }).populate('registerBy');
+      return getAllFinance;
+    } else {
+      console.log('length is 1');
+      const getAllFinance = await financeModel.find({ time: { $in: timeQueries } }).populate('registerBy');
+      return getAllFinance;
+    }
+   }
+
+   else if(url=='safe-deposit'){
+   
+      const getAllFinance = await financeModel.find({type: url }).populate('registerBy');
+      return getAllFinance;
+   
+   }
   
 };
 const changeFinanceStatus = async ({ id, body }) => {
   const getAllFinance = await financeModel.findByIdAndUpdate(id, body, {
-    new: true,
+    new: true
   });
 
   return getAllFinance;
@@ -99,5 +99,5 @@ module.exports = {
   createFinance,
   getAllFinance,
   changeFinanceStatus,
-  deleteAllFinance,
+  deleteAllFinance
 };
