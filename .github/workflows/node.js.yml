@@ -19,6 +19,6 @@ jobs:
           key: ${{ secrets.AWS_KEY }}
           script: |
                cd ~/foodlert-back
-               git pull origin main
+               git pull
                yarn
                pm2 restart index
