@@ -78,6 +78,7 @@ const getAllFinance = async (req, res, next) => {
   const type = getType(req);
   const query = req.query;
   console.log(query.time)
+  console.log("typeee-->",type)
 
  if(query.time!=undefined){
   let timeQueries = req.query.time.split(",")
