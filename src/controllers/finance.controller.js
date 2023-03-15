@@ -75,19 +75,27 @@ const createFinance = async (req, res, next) => {
 };
 
 const getAllFinance = async (req, res, next) => {
+  const type = getType(req);
   const query = req.query;
   console.log(query.time)
+
  if(query.time!=undefined){
   let timeQueries = req.query.time.split(",")
   console.log("tieeee-->",timeQueries)
- }
-  const type = getType(req);
+
+  const getAllFinance = await financeService.getAllFinance({ type , query,timeQueries});
+  res.status(httpStatus.CREATED)
+    .send({ totalFinance: getAllFinance.length, getAllFinance,query });
+  }
+  else{
+    const getAllFinance = await financeService.getAllFinance({ type , query});
+  res.status(httpStatus.CREATED)
+    .send({ totalFinance: getAllFinance.length, getAllFinance,query });
+  }
  
   // res.send(query)
   
-  const getAllFinance = await financeService.getAllFinance({ type , query});
-  res.status(httpStatus.CREATED)
-    .send({ totalFinance: getAllFinance.length, getAllFinance,query });
+  
 };
 
 const changeFinanceStatus = async (req, res, next) => {

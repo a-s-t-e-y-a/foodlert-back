@@ -67,8 +67,8 @@ const getAllFinance = async ({ type,query,timeQueries }) => {
   console.log(timeQueries)
  
   
-  if(time===  ""){
-   
+  if(time==="" || time===undefined){
+    console.log("length is 0")
     const getAllFinance = await financeModel
     .find()
     .populate("registerBy");
