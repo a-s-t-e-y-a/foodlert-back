@@ -59,7 +59,7 @@ const createFinance = async ({
   return createdFinance;
 };
 
-const getAllFinance = async ({ url, query, timeQueries="",date=""}) => {
+const getAllFinance = async ({ url, query, timeQueries="",date="",paymentMethod="",status=""}) => {
 
    if(url=='cash-register'){
     const { time } = query;
@@ -82,7 +82,32 @@ const getAllFinance = async ({ url, query, timeQueries="",date=""}) => {
       return getAllFinance;
    
    }
+   else if(url=="transfer"){
+
+    if(paymentMethod==="" && status ===""){
+      console.log("dono nahi hai")
+      const getAllFinance = await financeModel.find({type: url }).populate('registerBy');
+      return getAllFinance;
+       }
   
+       else if(paymentMethod!=="" && status!==""){
+        console.log("dono hai")
+        //logic i will give here array logic
+        const getAllFinance = await financeModel.find({ type:url , method:paymentMethod , status: status }).populate('registerBy');
+        return getAllFinance;
+         }
+  
+       else if(paymentMethod==="" || status===""){
+  console.log("ek hai")
+        //or logic i will give here 
+        const getAllFinance = await financeModel.find({ type:url }).populate('registerBy');
+        return getAllFinance;
+       }
+      
+   
+   
+
+      }
 };
 const changeFinanceStatus = async ({ id, body }) => {
   const getAllFinance = await financeModel.findByIdAndUpdate(id, body, {
