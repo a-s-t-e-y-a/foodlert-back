@@ -113,8 +113,34 @@ const getAllFinance = async (req, res, next) => {
     .send({ totalFinance: getAllFinance.length, getAllFinance,query });
  }
    }
+   else if(url==="transfer"){
+    const {paymentMethod,status} = query
+    console.log(paymentMethod,status)
+   if(paymentMethod==="" && status ===""){
+    const getAllFinance = await financeService.getAllFinance({ url });
+    res.status(httpStatus.CREATED)
+      .send({ totalFinance: getAllFinance.length, getAllFinance,query });
+     }
 
-};
+     else if(paymentMethod!=="" && status!==""){
+      //logic i will give here array logic
+      const getAllFinance = await financeService.getAllFinance({ url,paymentMethod,status });
+      res.status(httpStatus.CREATED)
+        .send({ totalFinance: getAllFinance.length, getAllFinance,query });
+       }
+
+     else if(paymentMethod==="" || status===""){
+
+      //or logic i will give here 
+      const getAllFinance = await financeService.getAllFinance({ url,paymentMethod,status });
+       res.status(httpStatus.CREATED)
+      .send({ totalFinance: getAllFinance.length, getAllFinance,query });
+     }
+     
+       
+    
+     }
+   };
 
 const changeFinanceStatus = async (req, res, next) => {
   const err = validateSchema(req, financeValidation.changeFinanceStatus);
