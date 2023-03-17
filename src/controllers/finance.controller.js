@@ -84,48 +84,55 @@ const getAllFinance = async (req, res, next) => {
   
 
    if(url==='cash-register'){
+
     if(query.time!=undefined && query.time!=""){
       let timeQueries = req.query.time.split(",")
       console.log("tieeee-->",timeQueries)
     
       const getAllFinance = await financeService.getAllFinance({ url , query,timeQueries});
-      res.status(httpStatus.CREATED)
+     return res.status(httpStatus.CREATED)
         .send({ totalFinance: getAllFinance.length, getAllFinance,query });
     }
+
       else{
         const getAllFinance = await financeService.getAllFinance({ url , query});
-      res.status(httpStatus.CREATED)
+        return res.status(httpStatus.CREATED)
         .send({ totalFinance: getAllFinance.length, getAllFinance,query });
       }
    }
+
    else if(url==='safe-deposit'){
     const date = req.query.date;
     console.log(date)
+
    if(date===undefined || date===""){
-    const getAllFinance = await financeService.getAllFinance({ url , query});
-    res.status(httpStatus.CREATED)
+    const getAllFinance = await financeService.getAllFinance({ url });
+    return res.status(httpStatus.CREATED)
       .send({ totalFinance: getAllFinance.length, getAllFinance,query });
  }
+
  else{
   console.log("date hai")
   const getAllFinance = await financeService.getAllFinance({ url , query,date});
-  res.status(httpStatus.CREATED)
+  return res.status(httpStatus.CREATED)
     .send({ totalFinance: getAllFinance.length, getAllFinance,query });
  }
    }
+
    else if(url==="transfer"){
     const {paymentMethod,status} = query
     console.log(paymentMethod,status)
+    
    if(paymentMethod==="" && status ===""){
     const getAllFinance = await financeService.getAllFinance({ url });
-    res.status(httpStatus.CREATED)
+   return res.status(httpStatus.CREATED)
       .send({ totalFinance: getAllFinance.length, getAllFinance,query });
      }
 
      else if(paymentMethod!=="" && status!==""){
       //logic i will give here array logic
       const getAllFinance = await financeService.getAllFinance({ url,paymentMethod,status });
-      res.status(httpStatus.CREATED)
+     return res.status(httpStatus.CREATED)
         .send({ totalFinance: getAllFinance.length, getAllFinance,query });
        }
 
@@ -133,7 +140,7 @@ const getAllFinance = async (req, res, next) => {
 
       //or logic i will give here 
       const getAllFinance = await financeService.getAllFinance({ url,paymentMethod,status });
-       res.status(httpStatus.CREATED)
+      return res.status(httpStatus.CREATED)
       .send({ totalFinance: getAllFinance.length, getAllFinance,query });
      }
      

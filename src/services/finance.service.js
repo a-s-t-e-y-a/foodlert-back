@@ -93,20 +93,30 @@ const getAllFinance = async ({ url, query, timeQueries="",date="",paymentMethod=
        else if(paymentMethod!=="" && status!==""){
         console.log("dono hai")
         //logic i will give here array logic
-        const getAllFinance = await financeModel.find({ type:url , method:paymentMethod , status: status }).populate('registerBy');
+        const paymentArr = paymentMethod.split(",")
+        console.log(paymentArr)
+        const statusArr = status.split(",")
+        console.log(statusArr)
+        const getAllFinance = await financeModel.find({ type:url , method:{$in : paymentArr} , status: {$in:statusArr} }).populate('registerBy');
         return getAllFinance;
          }
   
        else if(paymentMethod==="" || status===""){
   console.log("ek hai")
-        //or logic i will give here 
-        const getAllFinance = await financeModel.find({ type:url }).populate('registerBy');
-        return getAllFinance;
-       }
-      
-   
-   
+if(paymentMethod!==""){
+  const paymentArr = paymentMethod.split(",")
+  console.log(paymentArr)
 
+  const getAllFinance = await financeModel.find({ type:url,method:{$in:paymentArr} }).populate('registerBy');
+  return getAllFinance;
+}
+else if(status!==""){
+  const statusArr = status.split(",")
+  console.log(statusArr)
+  const getAllFinance = await financeModel.find({ type:url,status:{$in:statusArr} }).populate('registerBy');
+  return getAllFinance;
+}       
+       }
       }
 };
 const changeFinanceStatus = async ({ id, body }) => {
