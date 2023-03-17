@@ -78,7 +78,7 @@ const getAllFinance = async ({ url, query, timeQueries="",date="",paymentMethod=
 
    else if(url=='safe-deposit'){
    
-      const getAllFinance = await financeModel.find({type: url ,status:"approved" }).populate('registerBy');
+      const getAllFinance = await financeModel.find({type: url ,status:"pending" }).populate('registerBy');
       return getAllFinance;
    
    }
