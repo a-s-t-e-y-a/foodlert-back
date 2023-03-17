@@ -141,7 +141,7 @@ const getAllFinance = async (req, res, next) => {
       //or logic i will give here 
       const getAllFinance = await financeService.getAllFinance({ url,paymentMethod,status });
       return res.status(httpStatus.CREATED)
-      .send({ totalFinance: getAllFinance.length, getAllFinance,query });
+      .send({ totalFinance: getAllFinance.length, getAllFinance,query:"hii" });
      }
      
        
