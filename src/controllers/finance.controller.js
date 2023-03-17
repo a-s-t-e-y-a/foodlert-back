@@ -133,7 +133,7 @@ const getAllFinance = async (req, res, next) => {
       //logic i will give here array logic
       const getAllFinance = await financeService.getAllFinance({ url,paymentMethod,status });
      return res.status(httpStatus.CREATED)
-        .send({ totalFinance: getAllFinance.length, getAllFinance,query });
+        .send({ totalFinance: getAllFinance.length, getAllFinance,query:{paymentMethod:paymentMethod,status} });
        }
 
      else if(paymentMethod==="" || status===""){
