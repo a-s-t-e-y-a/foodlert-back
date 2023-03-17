@@ -102,22 +102,22 @@ const getAllFinance = async ({ url, query, timeQueries="",date="",paymentMethod=
         return getAllFinance;
          }
   
-//        else if(paymentMethod==="" || status===""){
-//   console.log("ek hai")
-// if(paymentMethod!==""){
-//   const paymentArr = paymentMethod.split(",")
-//   console.log(paymentArr)
+       else if(paymentMethod==="" || status===""){
+  console.log("ek hai")
+if(paymentMethod!==""){
+  const paymentArr = paymentMethod.split(",")
+  console.log(paymentArr)
 
-//   const getAllFinance = await financeModel.find({ type:url,method:{$in:paymentArr} }).populate('registerBy');
-//   return getAllFinance;
-// }
-// else if(status!==""){
-//   const statusArr = status.split(",")
-//   console.log(statusArr)
-//   const getAllFinance = await financeModel.find({ type:url,status:{$in:statusArr} }).populate('registerBy');
-//   return getAllFinance;
-// }       
-//        }
+  const getAllFinance = await financeModel.find({ type:url,method:{$in:paymentArr} }).populate('registerBy');
+  return getAllFinance;
+}
+else if(status!==""){
+  const statusArr = status.split(",")
+  console.log(statusArr)
+  const getAllFinance = await financeModel.find({ type:url,status:{$in:statusArr} }).populate('registerBy');
+  return getAllFinance;
+}       
+       }
       }
 };
 const changeFinanceStatus = async ({ id, body }) => {
