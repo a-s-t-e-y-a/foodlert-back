@@ -126,14 +126,14 @@ const getAllFinance = async (req, res, next) => {
    if(paymentMethod==="" && status ===""){
     const getAllFinance = await financeService.getAllFinance({ url });
    return res.status(httpStatus.CREATED)
-      .send({ totalFinance: getAllFinance.length, getAllFinance,quer:"hii" });
+      .send({ totalFinance: getAllFinance.length, getAllFinance,query:{paymentMethod:paymentMethod,status:status} });
      }
 
      else if(paymentMethod!=="" && status!==""){
       //logic i will give here array logic
       const getAllFinance = await financeService.getAllFinance({ url,paymentMethod,status });
      return res.status(httpStatus.CREATED)
-        .send({ totalFinance: getAllFinance.length, getAllFinance,query:{paymentMethod:paymentMethod,status} });
+        .send({ totalFinance: getAllFinance.length, getAllFinance,query:{paymentMethod:paymentMethod,status:status} });
        }
 
      else if(paymentMethod==="" || status===""){
@@ -141,7 +141,7 @@ const getAllFinance = async (req, res, next) => {
       //or logic i will give here 
       const getAllFinance = await financeService.getAllFinance({ url,paymentMethod,status });
       return res.status(httpStatus.CREATED)
-      .send({ totalFinance: getAllFinance.length, getAllFinance,quer:"hii" });
+      .send({ totalFinance: getAllFinance.length, getAllFinance,query:{paymentMethod:paymentMethod,status:status}});
      }    
      }
    };
