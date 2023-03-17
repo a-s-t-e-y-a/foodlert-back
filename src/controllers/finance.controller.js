@@ -126,7 +126,7 @@ const getAllFinance = async (req, res, next) => {
    if(paymentMethod==="" && status ===""){
     const getAllFinance = await financeService.getAllFinance({ url });
    return res.status(httpStatus.CREATED)
-      .send({ totalFinance: getAllFinance.length, getAllFinance,query });
+      .send({ totalFinance: getAllFinance.length, getAllFinance,quer:"hii" });
      }
 
      else if(paymentMethod!=="" && status!==""){
