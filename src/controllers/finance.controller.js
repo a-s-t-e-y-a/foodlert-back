@@ -102,22 +102,11 @@ const getAllFinance = async (req, res, next) => {
    }
 
    else if(url==='safe-deposit'){
-    const date = req.query.date;
-    console.log(date)
 
-   if(date===undefined || date===""){
     const getAllFinance = await financeService.getAllFinance({ url });
     return res.status(httpStatus.CREATED)
-      .send({ totalFinance: getAllFinance.length, getAllFinance,query });
+      .send({ totalFinance: getAllFinance.length, getAllFinance});
  }
-
- else{
-  console.log("date hai")
-  const getAllFinance = await financeService.getAllFinance({ url , query,date});
-  return res.status(httpStatus.CREATED)
-    .send({ totalFinance: getAllFinance.length, getAllFinance,query });
- }
-   }
 
    else if(url==="transfer"){
     const {paymentMethod,status} = query
@@ -143,6 +132,11 @@ const getAllFinance = async (req, res, next) => {
       return res.status(httpStatus.CREATED)
       .send({ totalFinance: getAllFinance.length, getAllFinance,query:{paymentMethod:paymentMethod,status:status}});
      }    
+     }
+     else if(url === "closing-days"){
+      const getAllFinance = await financeService.getAllFinance({ url});
+      return res.status(httpStatus.CREATED)
+      .send({ totalFinance: getAllFinance.length, getAllFinance,query});
      }
    };
 
