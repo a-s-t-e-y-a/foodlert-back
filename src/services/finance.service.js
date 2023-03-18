@@ -119,6 +119,11 @@ else if(status!==""){
 }       
        }
       }
+
+      else if(url === "closing-days"){
+        const getAllFinance = await financeModel.find({ type:url}).populate('registerBy');
+  return getAllFinance;
+      }
 };
 const changeFinanceStatus = async ({ id, body }) => {
   const getAllFinance = await financeModel.findByIdAndUpdate(id, body, {
