@@ -75,11 +75,11 @@ const inventoryStocktakeSchema = mongoose.Schema(
       default: 0,
     },
     waste: {
-      type: Number,
+      type: String,
       default: 0,
     },
     stock: {
-      type: Number,
+      type: String,
       default: 0,
     },
     inStock: {

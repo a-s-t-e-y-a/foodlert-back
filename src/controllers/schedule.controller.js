@@ -56,8 +56,9 @@ const getSchedules = async (req, res, next) => {
 
 const deleteSchedule = async (req, res, next) => {
   const { scheduleId } = req.params;
-  const branchId = req.user.branch.id;
-  const Schedule = await scheduleService.deleteSchedule(scheduleId, branchId);
+  const branchId = req.user.branch.id
+  // console.log(branchId)
+  const Schedule = await scheduleService.deleteSchedule(scheduleId);
   res.status(httpStatus.NO_CONTENT).send();
 };
 
