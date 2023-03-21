@@ -6,6 +6,6 @@ const scheduleController = require('../controllers/schedule.controller');
 router.post('/', auth, scheduleController.createSchedule);
 router.post('/publish', scheduleController.publishSchedule);
 router.get('/', auth, scheduleController.getSchedules);
-router.delete('/:scheduleId', scheduleController.deleteSchedule);
+router.delete('/:scheduleId',auth, scheduleController.deleteSchedule);
 
 module.exports = router;

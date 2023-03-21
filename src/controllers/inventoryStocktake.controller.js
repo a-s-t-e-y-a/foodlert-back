@@ -20,7 +20,7 @@ const createInventoryStocktake = async (req, res, next) => {
     minStock,
     quantity,
     subQuantity,
-    subsubQuantity,
+    subSubQuantity,
     total,
     supplier,
     storage,
@@ -36,6 +36,9 @@ const createInventoryStocktake = async (req, res, next) => {
     history,
   } = req.body;
 
+
+  
+
   const createdInventoryStocktake =
     await inventoryStocktakeService.createInventoryStocktake({
       itemName,
@@ -43,7 +46,7 @@ const createInventoryStocktake = async (req, res, next) => {
       minStock,
       quantity,
       subQuantity,
-      subsubQuantity,
+      subSubQuantity,
       total,
       supplier,
       storage,
@@ -59,6 +62,7 @@ const createInventoryStocktake = async (req, res, next) => {
       history,
       createdBy: req.user.id,
     });
+    console.log(createdInventoryStocktake)
   res.status(httpStatus.CREATED).send({ createdInventoryStocktake });
 };
 

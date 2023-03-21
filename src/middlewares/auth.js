@@ -38,6 +38,7 @@ const auth = async (req, res, next) => {
   let user = await userService.getUserById(decoded.sub);
   user = user.toJSON();
   req.user = user;
+  // console.log("usersss-->",req.user)
 
   // write business logic here
 

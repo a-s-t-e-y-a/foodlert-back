@@ -4,6 +4,7 @@ require('express-async-errors');
 const Schedule = require('../models/schedule.model');
 
 const createSchedule = async (scheduleBody) => {
+  // console.log(scheduleBody)
   const schedule = await Schedule.create(scheduleBody);
   return schedule;
 };
@@ -56,9 +57,12 @@ const publishSchedule = async (branchId) => {
   return await Schedule.updateMany({ branch: branchId }, { inDraft: false }).lean();
 };
 
-const deleteSchedule = async (scheduleId, branchId) => {
-  const schedule = await Schedule.findOneAndDelete({ _id: new ObjectId(scheduleId), branch: branchId });
+const deleteSchedule = async (scheduleId) => {
+  console.log(scheduleId)
+  const schedule = await Schedule.findOneAndDelete({ _id: scheduleId });
+  console.log(schedule)
   return schedule;
+  
 };
 
 module.exports = {
