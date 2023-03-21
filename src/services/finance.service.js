@@ -59,7 +59,7 @@ const createFinance = async ({
   return createdFinance;
 };
 
-const getAllFinance = async ({ url, query, timeQueries="",date="",paymentMethod="",status=""}) => {
+const getAllFinance = async ({ url, query, timeQueries="",paymentMethod="",status="",totalAmount="",missingPos=""}) => {
 
    if(url=='cash-register'){
     const { time } = query;
@@ -121,8 +121,35 @@ else if(status!==""){
       }
 
       else if(url === "closing-days"){
+       
+       if(totalAmount=="" && missingPos==""){
+        console.log("no one exist")
         const getAllFinance = await financeModel.find({ type:url}).populate('registerBy');
-  return getAllFinance;
+        return getAllFinance;
+       }
+       else if(totalAmount!=="" && missingPos!==""){
+        console.log("both exist")
+        totalAmount=Number(totalAmount)
+        missingPos=Number(missingPos)
+        
+        const getAllFinance = await financeModel.find({ type:url,$and:[{totalAmount:{$lte:totalAmount}},{missingPOS:{$lte:missingPos}}]}).populate('registerBy');
+        return getAllFinance;
+       }
+       else if(totalAmount=="" || missingPos==""){
+        console.log("any one exist")
+      if(totalAmount!==""){
+        totalAmount=Number(totalAmount)
+
+          const getAllFinance = await financeModel.find({type:url,totalAmount:{$lte:totalAmount}}).populate('registerBy');
+        return getAllFinance;
+      }
+      else if(missingPos!==""){
+        missingPos=Number(missingPos)
+
+        const getAllFinance = await financeModel.find({type:url,missingPOS:{$lte:missingPos}}).populate('registerBy');
+      return getAllFinance;
+    }
+       }
       }
 };
 const changeFinanceStatus = async ({ id, body }) => {

@@ -134,9 +134,24 @@ const getAllFinance = async (req, res, next) => {
      }    
      }
      else if(url === "closing-days"){
+      const {totalAmount ,missingPos} = query;
+      console.log("totalAmount-->",totalAmount)
+      console.log("missingPos-->",missingPos)
+     if(totalAmount=="" && missingPos == "" ){
       const getAllFinance = await financeService.getAllFinance({ url});
       return res.status(httpStatus.CREATED)
       .send({ totalFinance: getAllFinance.length, getAllFinance,query});
+     }
+     else if(totalAmount!=="" && missingPos!==""){
+      const getAllFinance = await financeService.getAllFinance({ url,totalAmount,missingPos});
+      return res.status(httpStatus.CREATED)
+      .send({ totalFinance: getAllFinance.length, getAllFinance,query});
+     }
+     else if(totalAmount=="" || missingPos==""){
+      const getAllFinance = await financeService.getAllFinance({ url,totalAmount,missingPos});
+      return res.status(httpStatus.CREATED)
+      .send({ totalFinance: getAllFinance.length, getAllFinance,query});
+     }
      }
    };
 
