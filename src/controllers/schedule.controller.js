@@ -27,7 +27,8 @@ const createSchedule = async (req, res, next) => {
   console.log(newSchedule);
 
   const schedule = await scheduleService.createSchedule(newSchedule);
-  res.status(httpStatus.CREATED).json({ schedule });
+  console.log(schedule)
+  res.status(httpStatus.CREATED).json({schedule});
 };
 
 const getSchedules = async (req, res, next) => {
