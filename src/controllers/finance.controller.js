@@ -56,7 +56,7 @@ const createFinance = async (req, res, next) => {
 
   const registerBy = req.user.id;
 
-  console.log(notes);
+  // console.log(notes);
 
   const createdFinance = await financeService.createFinance({
     type,
