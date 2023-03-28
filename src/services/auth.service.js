@@ -2,6 +2,7 @@ const otpGenerator = require('otp-generator');
 const httpStatus = require('http-status');
 const bcrypt = require('bcryptjs');
 const dayjs = require('dayjs');
+const {logout_model,login_model} = require("../models/logout.model")
 
 const config = require('../utils/config');
 const ApiError = require('../utils/ApiError');
@@ -51,12 +52,21 @@ const login = async (email, password) => {
 
   return user;
 };
+const login_time = async(time)=>{
+  console.log(time)
+  const userLoginTime = await login_model.create({login_time:time})
+  return userLoginTime;
+}
 
-const logout = async (sessionId) => {};
+const logout = async (time) => {
+  const logoutUser = await logout_model.create(time)
+  return logoutUser
+};
 
 module.exports = {
   sendOtp,
   verifyOtp,
   login,
-  logout
+  logout,
+  login_time
 };

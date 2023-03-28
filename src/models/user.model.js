@@ -53,7 +53,7 @@ const userSchema = mongoose.Schema(
       ref: 'Restaurent'
     }
   },
-  { timestamps: true }
+  { timestamps: true}
 );
 
 toJSON(userSchema, 'password');
