@@ -52,12 +52,99 @@ const createTask = async ({
   return createdTask;
 };
 
-const getAllTask = async ({ createdBy }) => {
+const getAllTask = async ({ createdBy,query="" }) => {
+  const {status,department,task,no_of_checklist} = query;
+ if(status=="" && department=="" && task=="" && no_of_checklist=="" ){
+   console.log("status-->",status)
+  console.log("department-->",department)
+  console.log("task-->",task)
+  console.log("no_of_checklist-->",no_of_checklist)
+  console.log("NO ONE")
   let getAllTask = await taskModel.find({ createdBy }).populate("createdBy");
+  return getAllTask;
+ }
+ else if(status!=="" && department!=="" && task!=="" && no_of_checklist!=="" ){
+  console.log("status-->",status)
+  console.log("department-->",department)
+  console.log("task-->",task)
+  console.log("no_of_checklist-->",no_of_checklist)
+  console.log("EVERY ONE")
+  const taskStatus = status.split(",")
+  const taskDepartment = department.split(",")
+  const taskTask = task.split(",")
+  const unit = no_of_checklist.split(",")
+  let getAllTask = await taskModel.find({ createdBy,status:{$in:taskStatus},assignTo:{$in:taskDepartment},repeat:{$in:taskTask},checklists:{$elemMatch:{"unit":{$in:unit}}} }).populate("createdBy");
+  return getAllTask;
+ }
+ else if(status=="" || department=="" || task=="" || no_of_checklist=="" ){
+  console.log("status-->",status)
+  console.log("department-->",department)
+  console.log("task-->",task)
+  console.log("no_of_checklist-->",no_of_checklist)
+  console.log("ANY ONE")
+
+  const taskStatus = status.split(",")
+  const taskDepartment = department.split(",")
+  const taskTask = task.split(",")
+  const unit = no_of_checklist.split(",")
+
+  if(status=="" && department=="" && task=="" && no_of_checklist==""){
+    console.log("nothing is given")
+    let getAllTask = await taskModel.find({ createdBy}).populate("createdBy");
+    return getAllTask;
+  }
+  else if(status=="" && department=="" && task==""){
+    console.log("no of checklist is given")
+    let getAllTask = await taskModel.find({ createdBy, checklists:{$elemMatch:{"unit":{$in:unit}}} }).populate("createdBy");
+    return getAllTask;
+  }
+  else if(status=="" && task=="" && no_of_checklist==""){
+    console.log("department is given")
+    let getAllTask = await taskModel.find({ createdBy,assignTo:{$in:taskDepartment} }).populate("createdBy");
+    return getAllTask;
+
+  }
+  else if(status=="" && department=="" && no_of_checklist==""){
+    let getAllTask = await taskModel.find({ createdBy,repeat:{$in:taskTask}}).populate("createdBy");
+    return getAllTask;
+  }
+  else if(department=="" && task=="" && no_of_checklist==""){
+    console.log("status is given")
+    let getAllTask = await taskModel.find({ createdBy,status:{$in:taskStatus}}).populate("createdBy");
+    return getAllTask;
+  }
+  else if(status=="" && task==""){
+    console.log("status is not given")
+    let getAllTask = await taskModel.find({ createdBy,assignTo:{$in:taskDepartment},checklists:{$elemMatch:{"unit":{$in:unit}}} }).populate("createdBy");
+    return getAllTask;
+
+  }else if(department=="" && task==""){
+    console.log("department is not given")
+    let getAllTask = await taskModel.find({ createdBy,status:{$in:taskStatus},checklists:{$elemMatch:{"unit":{$in:unit}}}}).populate("createdBy");
+    return getAllTask;
+
+  }
+  else if(task=="" && checklist==""){
+    console.log("task is not given")
+    console.log(taskStatus)
+    console.log(taskDepartment)
+    let getAllTask = await taskModel.find({ createdBy,status:{$in:taskStatus},assignTo:{$in:taskDepartment}}).populate("createdBy");
+    return getAllTask;
+  }
+  else if(status=="" && department==""){
+    let getAllTask = await taskModel.find({ createdBy,repeat:{$in:taskTask},checklists:{$elemMatch:{"unit":{$in:unit}}}}).populate("createdBy");
+    return getAllTask;
+
+  }
+  else if(status=="" && checklist==""){
+    let getAllTask = await taskModel.find({ createdBy,repeat:{$in:taskTask},assignTo:{$in:taskDepartment}}).populate("createdBy");
+    return getAllTask;
+  }
+ }
   // checkForCompletion(getAllTask);
   // await updatedTaskToCompleted();
-  getAllTask = await taskModel.find({ createdBy }).populate("createdBy");
-  return getAllTask;
+  // getAllTask = await taskModel.find({ createdBy }).populate("createdBy");
+ 
 };
 const getTask = async ({ id }) => {
   const getAllTask = await taskModel.findById(id).populate("createdBy");
