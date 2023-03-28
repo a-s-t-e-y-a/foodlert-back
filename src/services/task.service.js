@@ -105,39 +105,63 @@ const getAllTask = async ({ createdBy,query="" }) => {
 
   }
   else if(status=="" && department=="" && no_of_checklist==""){
+    console.log("task is given")
     let getAllTask = await taskModel.find({ createdBy,repeat:{$in:taskTask}}).populate("createdBy");
     return getAllTask;
   }
   else if(department=="" && task=="" && no_of_checklist==""){
+    // console.log("status is given")
     console.log("status is given")
     let getAllTask = await taskModel.find({ createdBy,status:{$in:taskStatus}}).populate("createdBy");
     return getAllTask;
   }
   else if(status=="" && task==""){
-    console.log("status is not given")
+    console.log("status and is not given")
     let getAllTask = await taskModel.find({ createdBy,assignTo:{$in:taskDepartment},checklists:{$elemMatch:{"unit":{$in:unit}}} }).populate("createdBy");
     return getAllTask;
 
   }else if(department=="" && task==""){
-    console.log("department is not given")
+    console.log("department and task is not given")
     let getAllTask = await taskModel.find({ createdBy,status:{$in:taskStatus},checklists:{$elemMatch:{"unit":{$in:unit}}}}).populate("createdBy");
     return getAllTask;
 
   }
-  else if(task=="" && checklist==""){
-    console.log("task is not given")
+  else if(task=="" && no_of_checklist==""){
+    console.log("task and checklist is not given")
     console.log(taskStatus)
     console.log(taskDepartment)
     let getAllTask = await taskModel.find({ createdBy,status:{$in:taskStatus},assignTo:{$in:taskDepartment}}).populate("createdBy");
     return getAllTask;
   }
   else if(status=="" && department==""){
+    console.log("task and checklist is not given")
     let getAllTask = await taskModel.find({ createdBy,repeat:{$in:taskTask},checklists:{$elemMatch:{"unit":{$in:unit}}}}).populate("createdBy");
     return getAllTask;
 
   }
-  else if(status=="" && checklist==""){
+  else if(status=="" && no_of_checklist==""){
+    console.log("department and task is not given")
     let getAllTask = await taskModel.find({ createdBy,repeat:{$in:taskTask},assignTo:{$in:taskDepartment}}).populate("createdBy");
+    return getAllTask;
+  }
+  else if(department==""){
+    console.log("only department is not given")
+    let getAllTask = await taskModel.find({ createdBy,status:{$in:taskStatus},repeat:{$in:taskTask},checklists:{$elemMatch:{"unit":{$in:unit}}}}).populate("createdBy");
+    return getAllTask;
+  }
+  else if(status==""){
+    console.log("only status is not given")
+    let getAllTask = await taskModel.find({ createdBy,assignTo:{$in:taskDepartment},repeat:{$in:taskTask},checklists:{$elemMatch:{"unit":{$in:unit}}}}).populate("createdBy");
+    return getAllTask;
+  }
+  else if(task==""){
+    console.log("only task is not given")
+    let getAllTask = await taskModel.find({ createdBy,status:{$in:taskStatus},assignTo:{$in:taskDepartment},checklists:{$elemMatch:{"unit":{$in:unit}}}}).populate("createdBy");
+    return getAllTask;
+  }
+  else if(no_of_checklist==""){
+    console.log("only checklist is not given")
+    let getAllTask = await taskModel.find({ createdBy,status:{$in:taskStatus},assignTo:{$in:taskDepartment},repeat:{$in:taskTask}}).populate("createdBy");
     return getAllTask;
   }
  }
