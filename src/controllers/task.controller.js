@@ -44,9 +44,12 @@ const createTask = async (req, res, next) => {
 };
 
 const getAllTask = async (req, res, next) => {
+  const query = req.query
+  console.log(query)
   console.log(req.user);
   const createdBy = req.user.id;
-  const getAllTask = await taskService.getAllTask({ createdBy });
+  console.log("createdBy-->",createdBy)
+  const getAllTask = await taskService.getAllTask({ createdBy,query });
   res
     .status(httpStatus.CREATED)
     .send({ totalTask: getAllTask.length, getAllTask });
