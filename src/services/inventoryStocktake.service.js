@@ -63,13 +63,34 @@ const createInventoryStocktake = async ({
   return createdInventoryStocktake;
 };
 
-const getAllInventoryStocktake = async () => {
-  const getAllInventoryStocktake = await inventoryStocktakeModel
+const getAllInventoryStocktake = async (query) => {
+  const {qtySold,qtyInStock,minStock,qtyWaste,qtyStock,stockValue,cost} = query;
+  if(qtySold=="" && qtyInStock=="" && minStock=="" && qtyWaste=="" && qtyStock=="" && stockValue=="" && cost==""){
+    const getAllInventoryStocktake = await inventoryStocktakeModel
     .find()
+    .populate("supplier") 
+    .populate({ path: "history" });
+
+  return getAllInventoryStocktake;
+  }
+  else {
+  const qtysold = qtySold.split(",").map(Number)
+  const qtyinstock = qtyInStock.split(",").map(Number)
+  const minstock = minStock.split(",").map(Number)
+  const qtywaste = qtyWaste.split(",").map(Number)
+  const qtystock = qtyStock.split(",").map(Number)
+  const stockvalue = stockValue.split(",").map(Number)
+  const costing = cost.split(",").map(Number)
+  console.log(qtysold,qtyinstock,minstock,qtywaste,qtystock,stockvalue,costing)
+    const getAllInventoryStocktake = await inventoryStocktakeModel
+    .find({$and:[{price:{$gte:costing[0],$lte:costing[1]}},{minStock:{$gte:minstock[0],$lte:minstock[1]}},{sold:{$gte:qtysold[0],$lte:qtysold[1]}},{waste:{$gte:qtywaste[0],$lte:qtywaste[1]}},{stock:{$gte:qtystock[0],$lte:qtystock[1]}}]})
     .populate("supplier")
     .populate({ path: "history" });
 
   return getAllInventoryStocktake;
+
+
+  }
 };
 const getInventoryStocktake = async ({ id }) => {
   const getAllInventoryStocktake = await inventoryStocktakeModel

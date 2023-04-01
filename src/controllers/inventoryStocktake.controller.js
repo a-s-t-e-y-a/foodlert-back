@@ -67,12 +67,13 @@ const createInventoryStocktake = async (req, res, next) => {
 };
 
 const getAllInventoryStocktake = async (req, res, next) => {
-  const getAllInventoryStocktake = await inventoryStocktakeService.getAllInventoryStocktake();
-  res.status(httpStatus.CREATED).send({
-    totalInventoryStocktake: getAllInventoryStocktake.length,
-    getAllInventoryStocktake,
-  });
-};
+  const query = req.query
+   const getAllInventoryStocktake = await inventoryStocktakeService.getAllInventoryStocktake(query);
+  return res.status(httpStatus.CREATED).send({
+     totalInventoryStocktake: getAllInventoryStocktake.length,
+     getAllInventoryStocktake,
+   });
+ };
 
 const getInventoryStocktake = async (req, res, next) => {
   const id = req.params.id;

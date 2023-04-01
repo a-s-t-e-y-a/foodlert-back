@@ -77,6 +77,7 @@ const getEmployee = async (req, res, next) => {
 };
 
 const getEmployees = async (req, res, next) => {
+  console.log("user-->",req.user)
   const { role } = req.query;
   let query = {};
   if (role) {
@@ -84,13 +85,15 @@ const getEmployees = async (req, res, next) => {
   }
   const restaurentId = req.user.restaurent;
   const branchId = req.user.branch.id;
-  console.log(query);
+  console.log("query-->",query);
   let employees;
   if (req.user.type === "owner") {
     query.restaurent = restaurentId;
+    console.log("query-->",query);
     employees = await employeeService.getEmployees(query);
   } else if (req.user.type === "manager") {
     query.branch = branchId;
+    console.log("query-->",query);
     employees = await employeeService.getEmployees(query);
   }
   res.json({ employees });

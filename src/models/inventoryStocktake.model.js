@@ -65,6 +65,7 @@ const inventoryStocktakeSchema = mongoose.Schema(
     },
     purchased: {
       type: Number,
+      default:0,
     },
     begin: {
       type: Number,
@@ -75,15 +76,16 @@ const inventoryStocktakeSchema = mongoose.Schema(
       default: 0,
     },
     waste: {
-      type: String,
+      type: Number,
       default: 0,
     },
     stock: {
-      type: String,
+      type: Number,
       default: 0,
     },
     inStock: {
       type: Number,
+      default:0,
     },
     orderDate: {
       type: String,
