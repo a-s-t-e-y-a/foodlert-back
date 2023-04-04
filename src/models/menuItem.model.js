@@ -59,7 +59,7 @@ const menuItemSchema = mongoose.Schema(
       type: Number,
     },
     preparingTime: {
-      type: String,
+      type: Number,
     },
     totalSold: {
       type: Number,
