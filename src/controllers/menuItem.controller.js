@@ -27,7 +27,8 @@ const createMenuItem = async (req, res, next) => {
 };
 
 const getAllMenuItem = async (req, res, next) => {
-  const getAllMenuItem = await menuItemService.getAllMenuItem();
+  const query = req.query;
+  const getAllMenuItem = await menuItemService.getAllMenuItem(query);
   res.status(httpStatus.CREATED).send({ totalMenuItem: getAllMenuItem.length, getAllMenuItem });
 };
 
